@@ -1,0 +1,21 @@
+{
+    "name": "istvan0304/ckImageManager",
+    "description": "Image manager for ck editor",
+    "type": "yii2-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "istvan0304",
+            "email": "sz.istvan0304@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "istvan0304\\ckImageManager\\": ""
+        }
+    }
+}
