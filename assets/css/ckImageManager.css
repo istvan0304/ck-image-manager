@@ -1,0 +1,14 @@
+.ck-handle-row{
+    grid-area: header;
+}
+
+.ck-image-list{
+    grid-area: main;
+}
+
+.ck-grid-container{
+    display: grid;
+    grid-gap: 50px 50px;
+}
+
+
