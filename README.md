@@ -1,0 +1,51 @@
+Image file upload manager for Yii2 CK editor
+=================
+
+Installation
+------------
+The preferred way to install this extension is through composer.
+
+- Run
+
+    $ php composer.phar require istvan0304/ck-image-manager "dev-master"
+    
+or add:
+    
+        "istvan0304/ck-image-manager": "dev-master"
+        
+to the require section of your application's composer.json file.    
+
+- Run the migrate to create the database table
+
+        yii migrate --migrationPath=@istvan0304/imagemanager/migrations
+        
+- Add new modules section to your configuration file:
+
+        'modules' => [
+        	'imagemanager' => [
+                        'class' => 'istvan0304\imagemanager\Module'
+                    ]
+        ],
+        
+- Add a new component in components section of your configuration file:
+
+        'imagemanager' => [
+                    'class' => 'istvan0304\imagemanager\components\CkImageManagerComponent'
+                ],
+                
+Usage
+------------
+
+For using the filebrowser in CKEditor add the filebrowserImageBrowseUrl to the clientOptions of the CKEditor widget. Tested only with CKEditor from 2amigOS.
+
+        use dosamigos\ckeditor\CKEditor;
+        
+        <?= $form->field($model, 'text')->widget(CKEditor::class, [
+                'options' => ['rows' => 6],
+                'preset' => 'advanced',
+                'clientOptions' => [
+                        'filebrowserImageBrowseUrl' => yii\helpers\Url::to(['imagemanager/ck-image', 'view-mode'=>'iframe', 'select-type'=>'ckeditor']),
+                    ],
+                ],
+            ])
+            ?>
