@@ -26,22 +26,22 @@ class CkImageController extends Controller
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
+                    'index' => ['GET'],
                     'delete' => ['POST'],
                 ],
             ],
         ];
     }
 
-
+    /**
+     * @return mixed
+     */
     public function actionIndex()
     {
         $ckImageManagerForm = new CkImageForm();
         $ckImages = CkImage::find()->all();
         $this->layout = "layout";
         CkImageManagerAsset::register($this->view);
-
-//        var_dump(Yii::$app->request->get("view-mode", "page"));
-//        var_dump($selectType = Yii::$app->request->get("select-type", "input"));
 
         return $this->render('index', [
             'ckImageManagerForm' => $ckImageManagerForm,
