@@ -1,8 +1,9 @@
-console.log(window.parent.document);
+'use strict';
 
 $(document).ready(function () {
     var $body = $('body'),
         $imgId = null,
+        $sidebar = $('#ck-sidebar'),
         $uploadBtn = $('#ck-img-upload'),
         $form = $('#img-upload-form'),
         $fileInput = $('input[name="CkImageForm[img_files][]"]'),
@@ -26,7 +27,7 @@ $(document).ready(function () {
         var formData = new FormData(form);
         console.log(formData);
 
-        $.ajax('/ckimagemanager/ck-image/upload', {
+        $.ajax('/imagemanager/ck-image/upload', {
             xhr: function () {
                 var xhr = new window.XMLHttpRequest();
 
@@ -95,8 +96,23 @@ $(document).ready(function () {
     var ckImage = {
         getDetails: (data) => {
             if (data !== undefined && typeof data === 'object') {
-                let $img = $('div[data-id="' + data.id + '"]').find('img').clone().css('width', '90px');
                 $imgId = data.id;
+
+                $.ajax('/imagemanager/ck-image/get-details', {
+                    method: "GET",
+                    dataType: 'json',
+                    data: {id: data.id},
+                    cache: false,
+                    success: function (response) {
+                        if(response['success']){
+                            $sidebar.empty().append(response['template']);
+                        }else if(response['success'] === false){
+                            $sidebar.empty().append(response['message']);
+                        }
+                    }
+                });
+
+
                 $selectedImgContainer.empty().append($img);
 
             }
@@ -112,7 +128,7 @@ $(document).ready(function () {
 
         delete: () => {
             if ($imgId !== null && typeof $imgId === 'number') {
-                $.ajax('/ckimagemanager/ck-image/delete', {
+                $.ajax('/imagemanager/ck-image/delete', {
                     method: "POST",
                     dataType: 'json',
                     data: {id: $imgId},
@@ -148,7 +164,3 @@ window.queryStringParameter = {
         }
     }
 };
-
-
-//var sField = window.queryStringParameter.get(window.location.href, "CKEditorFuncNum");
-//                                 window.top.opener.CKEDITOR.tools.callFunction(sField, 'dsfsdg');

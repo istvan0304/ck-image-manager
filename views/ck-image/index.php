@@ -1,5 +1,6 @@
 <?php
 
+use istvan0304\imagemanager\models\CkImageForm;
 use Yii;
 
 /* @var $this \yii\web\View */
@@ -26,7 +27,7 @@ use Yii;
         <div class="ck-progress-line">
             <div class="ck-progress"><span id="ck-percentage"></span></div>
         </div>
-    <button id="ck-upload-details" class="ck-btn ck-btn-second"><?= Yii::t('ckimage', 'Details') ?></button>
+        <button id="ck-upload-details" class="ck-btn ck-btn-second"><?= Yii::t('ckimage', 'Details') ?></button>
     </div>
 
 </div>
@@ -36,7 +37,4 @@ use Yii;
         'ckImages' => $ckImages
     ]); ?>
 
-<?php echo $this->render('_sidebar',
-    [
-        'ckImages' => $ckImages
-    ]); ?>
+<aside id="ck-sidebar"></aside>

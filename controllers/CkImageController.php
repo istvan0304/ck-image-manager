@@ -27,6 +27,7 @@ class CkImageController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'index' => ['GET'],
+                    'preview-thumbnail' => ['GET'],
                     'delete' => ['POST'],
                 ],
             ],
@@ -47,6 +48,39 @@ class CkImageController extends Controller
             'ckImageManagerForm' => $ckImageManagerForm,
             'ckImages' => $ckImages
         ]);
+    }
+
+    /**
+     * @param $id
+     * @return array
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
+    public function actionGetDetails($id)
+    {
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $response = [];
+
+            if ($id != null && is_numeric($id)) {
+                $ckImageModel = CkImage::findOne(['id' => $id]);
+
+                if ($ckImageModel != null) {
+                    $response['success'] = true;
+                    $response['template'] = $this->renderPartial('_details', ['ckImageArray' => $ckImageModel->toArray()]);
+                }else{
+                    $response['success'] = false;
+                    $response['message'] = Yii::t('ckimage', 'File not found!');
+                }
+            } else {
+                $response['success'] = false;
+            }
+
+            return $response;
+        } else {
+            throw new NotFoundHttpException(Yii::t('ckimage', 'Page not found!'));
+        }
     }
 
     public function actionUpload()
@@ -165,7 +199,7 @@ class CkImageController extends Controller
         $ckImage = CkImage::findOne($id);
 
         if ($ckImage) {
-            $path = Yii::$app->ckimagemanager->uploadPath . DIRECTORY_SEPARATOR . CkImage::THUMBNAIL_DIRECTORY;
+            $path = Yii::$app->imagemanager->uploadPath . DIRECTORY_SEPARATOR . CkImage::THUMBNAIL_DIRECTORY;
 
             if (!is_file($path . DIRECTORY_SEPARATOR . CkImage::THUMBNAIL . $ckImage->orig_name) && !is_file($path . DIRECTORY_SEPARATOR . CkImage::THUMBNAIL . $ckImage->file_name)) {
                 throw new \Exception(Yii::t('ckimage', 'File not found!'));
