@@ -2,10 +2,11 @@
 
 namespace istvan0304\imagemanager\assets;
 
-class CkImageManagerAsset extends \yii\web\AssetBundle
+use yii\web\AssetBundle;
+
+class CkImageManagerAsset extends AssetBundle
 {
-    public $baseUrl = '@web';
-    public $sourcePath = '@app/ckImageManager/assets/';
+    public $sourcePath = '@vendor/istvan0304/ck-image-manager/assets';
 
     public $css = [
 //        'css/ckImageManager.css',
@@ -16,6 +17,7 @@ class CkImageManagerAsset extends \yii\web\AssetBundle
     ];
 
     public $depends = [
+        'yii\web\JqueryAsset',
         'yii\web\YiiAsset',
     ];
 }
