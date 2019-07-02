@@ -4,6 +4,9 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 use yii\helpers\StringHelper;
 
+/* @var $this \yii\web\View */
+/* @var $ckImages */
+
 ?>
 
 <?php Pjax::begin(['id' => 'ck-pjax-image-list', 'options' => ['class' => 'ck-image-list']]); ?>

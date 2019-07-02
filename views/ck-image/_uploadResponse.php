@@ -1,4 +1,13 @@
+<?php
 
+use Yii;
+
+/* @var $this \yii\web\View */
+/* @var $successUpload */
+/* @var $filesNumber */
+/* @var $responsesData */
+
+?>
 
 <p><?= Yii::t('ckimage', 'Uploaded: ') ?><?= $successUpload ?>/<?= $filesNumber ?>...</p>
 <?php foreach ($responsesData as $key => $responseData): ?>

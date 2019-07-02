@@ -1,3 +1,13 @@
+<?php
+
+use Yii;
+
+/* @var $this \yii\web\View */
+/* @var $ckImageManagerForm istvan0304\imagemanager\models\CkImageForm */
+/* @var $ckImages */
+
+?>
+
 <div class="ck-details">
     <div class="ck-details-header">
         <h4><?= Yii::t('ckimage', 'Details') ?></h4>
