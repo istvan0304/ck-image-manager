@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\ckImageManager\models;
+namespace istvan0304\imagemanager\models;
 
 use Yii;
 use yii\db\ActiveRecord;

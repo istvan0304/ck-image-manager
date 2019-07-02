@@ -1,6 +1,6 @@
 <?php
 
-namespace istvan0304\ckImageManager;
+namespace istvan0304\imagemanager;
 
 use yii\base\Module as BaseModule;
 

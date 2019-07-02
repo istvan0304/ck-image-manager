@@ -1,13 +1,13 @@
 <?php
 
 
-namespace istvan0304\ckImageManager\controllers;
+namespace istvan0304\imagemanager\controllers;
 
 use Yii;
-use app\ckImageManager\assets\CkImageManagerAsset;
-use app\ckImageManager\components\UploadException;
-use app\ckImageManager\models\CkImage;
-use app\ckImageManager\models\CkImageForm;
+use istvan0304\imagemanager\assets\CkImageManagerAsset;
+use istvan0304\imagemanager\components\UploadException;
+use istvan0304\imagemanager\models\CkImage;
+use istvan0304\imagemanager\models\CkImageForm;
 use yii\filters\VerbFilter;
 use yii\imagine\Image;
 use yii\web\Controller;

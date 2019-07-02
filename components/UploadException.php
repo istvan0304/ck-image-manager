@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\ckImageManager\components;
+namespace istvan0304\imagemanager\components;
 
 
 class UploadException extends \Exception

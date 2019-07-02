@@ -1,6 +1,6 @@
 <?php
 
-namespace app\ckImageManager\assets;
+namespace istvan0304\imagemanager\assets;
 
 class CkImageManagerAsset extends \yii\web\AssetBundle
 {
