@@ -1,6 +1,7 @@
 <?php
 
 use Yii;
+use istvan0304\imagemanager\models\CkImage;
 
 /* @var $this \yii\web\View */
 /* @var $ckImageArray */
@@ -12,7 +13,7 @@ use Yii;
         <img src="<?= '/imagemanager/ck-image/preview-thumbnail?id=' . $ckImageArray['id'] ?>" class="ck-img">
     </div>
     <p class="ck-detail ck-selected-img-name"><?= $ckImageArray['orig_name'] ?></p>
-    <p class="ck-detail ck-selected-img-size"><?= $ckImageArray['size'] ?></p>
+    <small class="ck-detail ck-selected-img-size"><?= CkImage::formatSizeUnits($ckImageArray['size']) ?></small>
 </div>
 
 <button class="ck-btn ck-btn-first" id="ck-select" data-id="<?= $ckImageArray['id'] ?>"><?= Yii::t('ckimage', 'Select') ?></button>
