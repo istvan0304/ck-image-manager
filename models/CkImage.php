@@ -25,8 +25,8 @@ class CkImage extends ActiveRecord
 {
     const THUMBNAIL = 'thumbnail_';
     const THUMBNAIL_DIRECTORY = '.thumbnails';
-    const THUMBNAIL_WIDTH = 100;
-    const THUMBNAIL_HEIGHT = 100;
+    const THUMBNAIL_WIDTH = 130;
+    const THUMBNAIL_HEIGHT = 130;
     public $img_file;
     public $thumbnail;
 
