@@ -28,6 +28,7 @@ class CkImageController extends Controller
                 'actions' => [
                     'index' => ['GET'],
                     'preview-thumbnail' => ['GET'],
+                    'get-image' => ['GET'],
                     'delete' => ['POST'],
                 ],
             ],
@@ -106,11 +107,6 @@ class CkImageController extends Controller
                         throw new UploadException($ckImageModel->img_file->error);
                     }
 
-//                    var_dump($ckImageModel->img_file->getHasError());
-//
-//                    var_dump($ckImageModel->img_file->error);
-//                    die();
-
                     $ckImageModel->file_name = $fileName;
                     $ckImageModel->orig_name = $ckImageModel->img_file->name;
                     $ckImageModel->file_hash = hash_file('md5', $filePath);
@@ -188,6 +184,44 @@ class CkImageController extends Controller
         } else {
             throw new NotFoundHttpException(Yii::t('ckimage', 'Page not found!'));
         }
+    }
+
+    /**
+     * @param $id
+     * @throws \Exception
+     */
+    public function actionGetImage($id)
+    {
+        $ckImage = CkImage::findOne($id);
+
+        if ($ckImage) {
+            $path = Yii::$app->imagemanager->uploadPath;
+
+            if (!is_file($path . DIRECTORY_SEPARATOR . $ckImage->orig_name) && !is_file($path . DIRECTORY_SEPARATOR . $ckImage->file_name)) {
+                throw new \Exception(Yii::t('ckimage', 'File not found!'));
+            } else {
+                $pointer = null;
+
+                if (is_file($path . DIRECTORY_SEPARATOR . $ckImage->orig_name)) {
+                    $imagePath = $path . DIRECTORY_SEPARATOR . $ckImage->orig_name;
+                    header('Content-type: ' . mime_content_type($imagePath));
+                    header('Content-Length: ' . filesize($imagePath));
+                    $pointer = @fopen($imagePath, 'rb');
+                } elseif (is_file($path . DIRECTORY_SEPARATOR . $ckImage->file_name)) {
+                    $imagePath = $path . DIRECTORY_SEPARATOR . $ckImage->file_name;
+                    header('Content-type: ' . mime_content_type($imagePath));
+                    header('Content-Length: ' . filesize($imagePath));
+                    $pointer = @fopen($imagePath, 'rb');
+                }
+
+                if ($pointer) {
+                    fpassthru($pointer);
+                    exit();
+                }
+            }
+        }
+
+        throw new \Exception(Yii::t('ckimage', 'File not found!'));
     }
 
     /**
