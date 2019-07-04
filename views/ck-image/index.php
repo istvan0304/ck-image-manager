@@ -1,7 +1,6 @@
 <?php
 
 use istvan0304\imagemanager\models\CkImageForm;
-use Yii;
 
 /* @var $this \yii\web\View */
 /* @var $ckImageManagerForm istvan0304\imagemanager\models\CkImageForm */
