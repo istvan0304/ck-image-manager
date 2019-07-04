@@ -30,7 +30,9 @@ to the require section of your application's composer.json file.
 - Add a new component in components section of your configuration file:
 
         'imagemanager' => [
-                    'class' => 'istvan0304\imagemanager\components\CkImageManagerComponent'
+                    'class' => 'istvan0304\imagemanager\components\CkImageManagerComponent',
+                    'useOriginalFilename' => false,     		//use filename (seo friendly) or use a hash
+                    'uploadPath' => '/uploads',                 //set upload path (default /uploads)
                 ],
                 
 Usage
