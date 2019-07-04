@@ -9,6 +9,7 @@ use istvan0304\imagemanager\components\UploadException;
 use istvan0304\imagemanager\models\CkImage;
 use istvan0304\imagemanager\models\CkImageForm;
 use yii\filters\VerbFilter;
+use yii\helpers\Html;
 use yii\imagine\Image;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -129,7 +130,7 @@ class CkImageController extends Controller
                             $response[$ckImageModel->orig_name] = [
                                 'success' => false,
                                 'class' => 'ck-error',
-                                'message' => Yii::t('ckimage', 'File upload error')
+                                'message' => Html::errorSummary($ckImageModel)
                             ];
 
                             $ckImageModel->delete();

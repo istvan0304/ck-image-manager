@@ -9,7 +9,9 @@ $(document).ready(function () {
         $fileInput = $('input[name="CkImageForm[img_files][]"]'),
         $progessBar = $('.ck-progress'),
         $details = $('.ck-details'),
+        $uploadStatus = $('#ck-upload-status'),
         $detailsOpen = $('#ck-upload-details'),
+        $progressClose = $('.ck-progress-close'),
         $detailsClose = $('.ck-details-close');
 
     $fileInput.change(function () {
@@ -38,11 +40,15 @@ $(document).ready(function () {
     });
 
     $detailsOpen.click(function () {
-        $details.animate({width: 'toggle'});
+        $details.animate({width: 'toggle', display: 'inline-table'});
     });
 
     $detailsClose.click(function () {
         $details.animate({width: 'toggle'});
+    });
+
+    $progressClose.click(function () {
+        $uploadStatus.css('display', 'none');
     });
 
     $body.on('click', '#ck-select', function () {
@@ -82,8 +88,14 @@ $(document).ready(function () {
                     contentType: false,
                     cache: false,
                     success: function (response) {
-                        $details.find('.ck-details-body').empty().append(response);
-                        $.pjax.reload({container: "#ck-pjax-image-list"});
+                        if(response['class'] === 'load-error'){
+                            $details.find('.ck-details-body').empty().append(response['message']);
+                        }else{
+                            $details.find('.ck-details-body').empty().append(response);
+                            $.pjax.reload({container: "#ck-pjax-image-list"});
+                        }
+
+                        $uploadStatus.css('display', 'block');
                     },
                     error: function (xhr) {
                         console.log(xhr);
