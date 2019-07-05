@@ -59,6 +59,7 @@ if use rbac set access:
         'as access' => [
                 'class' => 'mdm\admin\components\AccessControl',
                 'allowActions' => [
-                    'imagemanager/*'
+                    'imagemanager/ck-image/get-image',
+                    'imagemanager/ck-image/preview-thumbnail'
                 ]
             ],
