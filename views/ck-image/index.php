@@ -11,7 +11,7 @@ use istvan0304\imagemanager\models\CkImageForm;
 <div class="ck-details">
     <div class="ck-details-header">
         <h4><?= Yii::t('ckimage', 'Details') ?></h4>
-        <a href="#" class="ck-details-close"></a>
+        <a href="#" class="ck-close ck-details-close"></a>
     </div>
     <div class="ck-details-body"></div>
 </div>
@@ -22,6 +22,7 @@ use istvan0304\imagemanager\models\CkImageForm;
     ]); ?>
 
 <div id="ck-upload-status">
+    <a href="#" class="ck-close ck-progress-close"></a>
     <div class="ck-progress-container">
         <div class="ck-progress-line">
             <div class="ck-progress"><span id="ck-percentage"></span></div>
