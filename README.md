@@ -32,7 +32,7 @@ to the require section of your application's composer.json file.
         'imagemanager' => [
                     'class' => 'istvan0304\imagemanager\components\CkImageManagerComponent',
                     'useOriginalFilename' => false,     		//use filename (seo friendly) or use a hash
-                    'uploadPath' => '/uploads',                 //set upload path (default /uploads)
+                    'uploadPath' => 'uploads/files',                 //set upload path (default /uploads)
                 ],
                 
 Usage
@@ -51,3 +51,14 @@ For using the filebrowser in CKEditor add the filebrowserImageBrowseUrl to the c
                 ],
             ])
             ?>
+
+Access
+------------
+if use rbac set access:
+
+        'as access' => [
+                'class' => 'mdm\admin\components\AccessControl',
+                'allowActions' => [
+                    'imagemanager/*'
+                ]
+            ],
