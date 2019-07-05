@@ -18,7 +18,6 @@ $this->title = Yii::t('ckimage', 'Upload images to the server');
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <link rel="stylesheet" href="/css/ckImageManager.css">
     <?php $this->head() ?>
 </head>
 
