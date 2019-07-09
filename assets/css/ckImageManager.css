@@ -116,7 +116,6 @@
 .ck-response-box.ck-error{
     background: #EF9A9A;
     border: 2px solid #C62828;
-
 }
 
 #ck-upload-status{
@@ -135,7 +134,6 @@
     border-radius: 16px;
     border: 1px solid #d7dcdf;
     margin-bottom: 25px;
-    display: none;
 }
 
 .ck-progress{

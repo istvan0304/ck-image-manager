@@ -65,6 +65,8 @@ $(document).ready(function () {
             let formData = new FormData(form);
 
             if (formData !== undefined) {
+                $('#ck-upload-status').css('display', 'block');
+
                 $.ajax('/imagemanager/ck-image/upload', {
                     xhr: function () {
                         var xhr = new window.XMLHttpRequest();
@@ -73,7 +75,6 @@ $(document).ready(function () {
                             if (evt.lengthComputable) {
                                 var percentComplete = evt.loaded / evt.total;
                                 percentComplete = Math.round((evt.loaded * 100) / evt.total);
-                                $('.ck-progress-line').css('display', 'block');
                                 $progessBar.css('width', percentComplete + '%');
                                 $('#ck-percentage').text(percentComplete + '%');
                             }
