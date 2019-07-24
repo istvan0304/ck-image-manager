@@ -85,12 +85,19 @@ class CkImageController extends Controller
         }
     }
 
+    /**
+     * @return string
+     * @throws \Throwable
+     * @throws \yii\base\Exception
+     * @throws \yii\db\StaleObjectException
+     */
     public function actionUpload()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $ckImageFormModel = new CkImageForm();
         $response = [];
         $successUpload = 0;
+        $uploadResponse = '';
 
         if ($ckImageFormModel->load(Yii::$app->request->post())) {
             $files = UploadedFile::getInstances($ckImageFormModel, 'img_files');
@@ -139,7 +146,7 @@ class CkImageController extends Controller
                         $response[$ckImageModel->orig_name] = [
                             'success' => false,
                             'class' => 'ck-error',
-                            'message' => $ckImageModel->getErrors()
+                            'message' => Html::errorSummary($ckImageModel)
                         ];
                     }
                 } catch (UploadException $e) {
@@ -151,12 +158,18 @@ class CkImageController extends Controller
                 }
             }
 
-            return $this->renderAjax('_uploadResponse', ['responsesData' => $response, 'filesNumber' => count($files), 'successUpload' => $successUpload]);
+            $uploadResponse = $this->renderAjax('_uploadResponse', ['responsesData' => $response, 'filesNumber' => count($files), 'successUpload' => $successUpload]);
         } else {
-            return 'sadf';
+            $response[Yii::t('ckimage', 'Error!')] = [
+                'success' => false,
+                'class' => 'ck-error',
+                'message' => Yii::t('ckimage', 'An error occured!')
+            ];
+
+            $uploadResponse = $this->renderAjax('_uploadResponse', ['responsesData' => $response, 'filesNumber' => 0, 'successUpload' => 0]);
         }
 
-
+        return $uploadResponse;
     }
 
     /**
