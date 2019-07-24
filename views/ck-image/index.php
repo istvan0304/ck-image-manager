@@ -1,7 +1,5 @@
 <?php
 
-use istvan0304\imagemanager\models\CkImageForm;
-
 /* @var $this \yii\web\View */
 /* @var $ckImageManagerForm istvan0304\imagemanager\models\CkImageForm */
 /* @var $ckImages */
@@ -37,4 +35,7 @@ use istvan0304\imagemanager\models\CkImageForm;
         'ckImages' => $ckImages
     ]); ?>
 
-<aside id="ck-sidebar"></aside>
+<aside id="ck-sidebar">
+    <p class="ck-no-select"><?= Yii::t('ckimage', 'No image selected.') ?></p>
+    <div class="ck-sidebar-content"></div>
+</aside>

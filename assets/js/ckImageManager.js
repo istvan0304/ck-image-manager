@@ -31,11 +31,13 @@ $(document).ready(function () {
     $body.on('click', '.ck-img-box', function () {
         if ($(this).hasClass('active')) {
             $('.ck-img-box').removeClass('active');
-            $sidebar.empty().css({'display': 'none'});
+            $sidebar.find('.ck-sidebar-content').empty();
+            $sidebar.find('.ck-no-select').css('display', 'block');
         } else {
             $('.ck-img-box').removeClass('active');
             $(this).addClass('active');
             ckImage.getDetails($(this).data());
+            $sidebar.find('.ck-no-select').css('display', 'none');
         }
     });
 
@@ -118,9 +120,9 @@ $(document).ready(function () {
                     cache: false,
                     success: function (response) {
                         if (response['success']) {
-                            $sidebar.empty().append(response['template']).css({'display': 'block'});
+                            $sidebar.find('.ck-sidebar-content').empty().append(response['template']);
                         } else if (response['success'] === false) {
-                            $sidebar.empty().append(response['message']).css({'display': 'block'});
+                            $sidebar.find('.ck-sidebar-content').append(response['message']);
                         }
                     }
                 });
