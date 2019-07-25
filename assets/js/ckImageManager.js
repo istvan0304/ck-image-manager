@@ -52,6 +52,10 @@ $(document).ready(function () {
         $uploadStatus.css('display', 'none');
     });
 
+    $body.on('dblclick', '.ck-img-box', function () {
+        ckImage.select($(this).data('id'));
+    });
+
     $body.on('click', '#ck-select', function () {
         ckImage.select($(this).data('id'));
     });
