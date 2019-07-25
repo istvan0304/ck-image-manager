@@ -134,7 +134,6 @@
     border-radius: 16px;
     border: 1px solid #d7dcdf;
     margin-bottom: 25px;
-    display: none;
 }
 
 .ck-progress{
@@ -163,6 +162,7 @@
 }
 
 .ck-img-box{
+    text-align: center;
     display: inline-grid;
     padding: 5px;
     background-color: #f7f8f9;
