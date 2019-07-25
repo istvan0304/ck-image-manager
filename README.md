@@ -31,8 +31,9 @@ to the require section of your application's composer.json file.
 
         'imagemanager' => [
                     'class' => 'istvan0304\imagemanager\components\CkImageManagerComponent',
-                    'useOriginalFilename' => false,     		//use filename (seo friendly) or use a hash
+                    'useOriginalFilename' => false,     		     //use filename (seo friendly) or use a hash
                     'uploadPath' => 'uploads/files',                 //set upload path (default /uploads)
+                    'allowDuplicateImage' => false,                  //Let you to upload an image more than one times (default: false)
                 ],
                 
 Usage
