@@ -3,6 +3,7 @@
 $(document).ready(function () {
     var $body = $('body'),
         $imgId = null,
+        $search = $('#ck-search'),
         $sidebar = $('#ck-sidebar'),
         $uploadBtn = $('#ck-img-upload'),
         $form = $('#img-upload-form'),
@@ -59,6 +60,21 @@ $(document).ready(function () {
         ckImage.delete($(this).data('id'));
     });
 
+    $search.keyup(function () {
+        var search = $(this).val();
+        var items = $('.ck-image-name');
+
+        $.each(items, function (index, value) {
+            var option = $(value).attr('title').toLowerCase();
+
+            if (option !== undefined && option.indexOf(search) < 0) {
+                $(value).parent().parent().css('display', 'none');
+            } else {
+                $(value).parent().parent().css('display', 'block');
+            }
+        });
+    });
+
     var ckImage = {
         upload: () => {
             let form = document.getElementById('img-upload-form');
@@ -89,9 +105,9 @@ $(document).ready(function () {
                     contentType: false,
                     cache: false,
                     success: function (response) {
-                        if(response['class'] === 'load-error'){
+                        if (response['class'] === 'load-error') {
                             $details.find('.ck-details-body').empty().append(response['message']);
-                        }else{
+                        } else {
                             $details.find('.ck-details-body').empty().append(response);
                             $.pjax.reload({container: "#ck-pjax-image-list"});
                         }

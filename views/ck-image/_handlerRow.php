@@ -1,6 +1,5 @@
 <?php
 
-use Yii;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
@@ -18,4 +17,6 @@ use yii\helpers\Html;
     <?= $form->field($ckImageManagerForm, 'img_files[]')->fileInput(['multiple' => true, 'accept' => 'image/*'])->label(false) ?>
 
     <?php ActiveForm::end(); ?>
+
+    <?= Html::textInput('search', null, ['id' => 'ck-search', 'placeholder' => Yii::t('ckimage', 'Search...')]) ?>
 </div>

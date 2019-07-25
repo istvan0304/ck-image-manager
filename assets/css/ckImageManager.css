@@ -107,6 +107,17 @@
     margin-bottom: 0;
 }
 
+#img-upload-form{
+    float: left;
+}
+
+#ck-search{
+    float: right;
+    border: 1px solid #d7dcdf;
+    border-radius: 3px;
+    padding: 5px 10px;
+}
+
 .ck-response-box.ck-success{
     background: #A5D6A7;
     border: 2px solid #388E3C;
