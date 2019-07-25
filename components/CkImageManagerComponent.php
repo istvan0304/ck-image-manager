@@ -20,6 +20,11 @@ class CkImageManagerComponent extends Component
     public $useOriginalFilename = true;
 
     /**
+     * @var bool $allowDuplicateImage Let you to upload an image more than one times
+     */
+    public $allowDuplicateImage = false;
+
+    /**
      * Init set config
      */
     public function init() {
@@ -39,5 +44,4 @@ class CkImageManagerComponent extends Component
             throw new InvalidConfigException("Image upload file path '$this->uploadPath' is not a string");
         }
     }
-
 }

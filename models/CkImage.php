@@ -68,21 +68,25 @@ class CkImage extends ActiveRecord
             [['cr_date', 'mod_date'], 'safe'],
             [['file_name', 'orig_name', 'file_hash', 'mime'], 'string', 'max' => 255],
             [['extension'], 'string', 'max' => 32],
-//            [['file_hash'], 'validateFileHash']
+            [['file_hash'], 'validateFileHash']
         ];
     }
 
     /**
-     * Validate if file already uploaded.
      * @param $attribute
+     * @return bool
      */
     public function validateFileHash($attribute)
     {
-        $fileCount = CkImage::find()->where(['file_hash' => $this->file_hash])->count();
+        if (!Yii::$app->imagemanager->allowDuplicateImage) {
+            $fileCount = CkImage::find()->where(['file_hash' => $this->file_hash])->count();
 
-        if($fileCount > 0){
-            $this->addError($attribute, Yii::t('ckimage', 'This file is already uploaded!'));
+            if ($fileCount > 0) {
+                $this->addError($attribute, Yii::t('ckimage', 'This file is already uploaded!'));
+            }
         }
+
+        return true;
     }
 
     /**
@@ -112,7 +116,7 @@ class CkImage extends ActiveRecord
         $path = Yii::$app->imagemanager->uploadPath;
         $fileName = Yii::$app->imagemanager->useOriginalFilename ? $this->orig_name : $this->file_name;
 
-        if(!file_exists($path)){
+        if (!file_exists($path)) {
             FileHelper::createDirectory($path);
         }
 
@@ -132,7 +136,7 @@ class CkImage extends ActiveRecord
         $path = Yii::$app->imagemanager->uploadPath . DIRECTORY_SEPARATOR . self::THUMBNAIL_DIRECTORY;
         $fileName = Yii::$app->imagemanager->useOriginalFilename ? self::THUMBNAIL . $this->orig_name : self::THUMBNAIL . $this->file_name;
 
-        if(!file_exists($path)){
+        if (!file_exists($path)) {
             FileHelper::createDirectory($path);
         }
 
@@ -151,7 +155,7 @@ class CkImage extends ActiveRecord
         $thumbPath = Yii::$app->imagemanager->uploadPath . DIRECTORY_SEPARATOR . self::THUMBNAIL_DIRECTORY;
         $thumbFileName = Yii::$app->imagemanager->useOriginalFilename ? self::THUMBNAIL . $this->orig_name : self::THUMBNAIL . $this->file_name;
 
-        if(file_exists($path . DIRECTORY_SEPARATOR . $fileName) && file_exists($thumbPath . DIRECTORY_SEPARATOR . $thumbFileName)){
+        if (file_exists($path . DIRECTORY_SEPARATOR . $fileName) && file_exists($thumbPath . DIRECTORY_SEPARATOR . $thumbFileName)) {
             FileHelper::unlink($path . DIRECTORY_SEPARATOR . $fileName);
             FileHelper::unlink($thumbPath . DIRECTORY_SEPARATOR . $thumbFileName);
 
@@ -182,28 +186,17 @@ class CkImage extends ActiveRecord
      */
     public static function formatSizeUnits($bytes)
     {
-        if ($bytes >= 1073741824)
-        {
+        if ($bytes >= 1073741824) {
             $bytes = number_format($bytes / 1073741824, 2) . ' GB';
-        }
-        elseif ($bytes >= 1048576)
-        {
+        } elseif ($bytes >= 1048576) {
             $bytes = number_format($bytes / 1048576, 2) . ' MB';
-        }
-        elseif ($bytes >= 1024)
-        {
+        } elseif ($bytes >= 1024) {
             $bytes = number_format($bytes / 1024, 2) . ' KB';
-        }
-        elseif ($bytes > 1)
-        {
+        } elseif ($bytes > 1) {
             $bytes = $bytes . ' bytes';
-        }
-        elseif ($bytes == 1)
-        {
+        } elseif ($bytes == 1) {
             $bytes = $bytes . ' byte';
-        }
-        else
-        {
+        } else {
             $bytes = '0 bytes';
         }
 

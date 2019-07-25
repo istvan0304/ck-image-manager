@@ -31,13 +31,11 @@ $(document).ready(function () {
     $body.on('click', '.ck-img-box', function () {
         if ($(this).hasClass('active')) {
             $('.ck-img-box').removeClass('active');
-            $sidebar.find('.ck-sidebar-content').empty();
-            $sidebar.find('.ck-no-select').css('display', 'block');
+            sidebar.emptySelect($sidebar);
         } else {
             $('.ck-img-box').removeClass('active');
             $(this).addClass('active');
             ckImage.getDetails($(this).data());
-            $sidebar.find('.ck-no-select').css('display', 'none');
         }
     });
 
@@ -75,8 +73,8 @@ $(document).ready(function () {
 
                         xhr.upload.addEventListener("progress", function (evt) {
                             if (evt.lengthComputable) {
-                                var percentComplete = evt.loaded / evt.total;
-                                percentComplete = Math.round((evt.loaded * 100) / evt.total);
+                                // var percentComplete = evt.loaded / evt.total;
+                                let percentComplete = Math.round((evt.loaded * 100) / evt.total);
                                 $progessBar.css('width', percentComplete + '%');
                                 $('#ck-percentage').text(percentComplete + '%');
                             }
@@ -120,6 +118,7 @@ $(document).ready(function () {
                     cache: false,
                     success: function (response) {
                         if (response['success']) {
+                            $sidebar.find('.ck-no-select').css('display', 'none');
                             $sidebar.find('.ck-sidebar-content').empty().append(response['template']);
                         } else if (response['success'] === false) {
                             $sidebar.find('.ck-sidebar-content').append(response['message']);
@@ -147,7 +146,7 @@ $(document).ready(function () {
                     success: function (response) {
                         if (response['success']) {
                             $.pjax.reload({container: "#ck-pjax-image-list"});
-                            $sidebar.empty().css({'display': 'none'});
+                            sidebar.emptySelect($sidebar);
                         }
                     }
                 });
@@ -155,6 +154,13 @@ $(document).ready(function () {
         }
     };
 });
+
+var sidebar = {
+    emptySelect: ($sidebar) => {
+        $sidebar.find('.ck-sidebar-content').empty();
+        $sidebar.find('.ck-no-select').css('display', 'block');
+    },
+};
 
 
 window.queryStringParameter = {
