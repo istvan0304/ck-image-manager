@@ -9,6 +9,7 @@ class CkImageManagerAsset extends AssetBundle
     public $sourcePath = '@vendor/istvan0304/ck-image-manager/assets';
 
     public $css = [
+        'css/all.min.css',
         'css/ckImageManager.css',
     ];
 

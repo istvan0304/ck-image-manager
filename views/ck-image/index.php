@@ -25,7 +25,7 @@
         <div class="ck-progress-line">
             <div class="ck-progress"><span id="ck-percentage"></span></div>
         </div>
-        <button id="ck-upload-details" class="ck-btn ck-btn-second"><?= Yii::t('ckimage', 'Details') ?></button>
+        <button id="ck-upload-details" class="ck-btn ck-btn-second"><i class="fas fa-info-circle"></i> <?= Yii::t('ckimage', 'Details') ?></button>
     </div>
 
 </div>

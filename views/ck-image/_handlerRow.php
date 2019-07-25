@@ -10,7 +10,7 @@ use yii\helpers\Html;
 ?>
 
 <div class="ck-handle-row">
-    <button id="ck-img-upload" class="ck-btn ck-btn-second"><?= Yii::t('ckimage', 'Upload') ?></button>
+    <button id="ck-img-upload" class="ck-btn ck-btn-second"><i class="fas fa-upload"></i> <?= Yii::t('ckimage', 'Upload') ?></button>
 
     <?php $form = ActiveForm::begin(['id' => 'img-upload-form', 'enableClientValidation' => false]); ?>
 

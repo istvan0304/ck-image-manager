@@ -17,4 +17,4 @@ use istvan0304\imagemanager\models\CkImage;
 </div>
 
 <button class="ck-btn ck-btn-first" id="ck-select" data-id="<?= $ckImageArray['id'] ?>"><?= Yii::t('ckimage', 'Select') ?></button>
-<button class="ck-btn ck-btn-third" id="ck-delete" data-id="<?= $ckImageArray['id'] ?>"><?= Yii::t('ckimage', 'Delete') ?></button>
+<button class="ck-btn ck-btn-third" id="ck-delete" data-id="<?= $ckImageArray['id'] ?>"><i class="fas fa-trash-alt"></i> <?= Yii::t('ckimage', 'Delete') ?></button>
