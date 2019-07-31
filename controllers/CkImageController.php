@@ -4,6 +4,7 @@
 namespace istvan0304\imagemanager\controllers;
 
 use Yii;
+use istvan0304\imagemanager\models\CkImageSearch;
 use istvan0304\imagemanager\assets\CkImageManagerAsset;
 use istvan0304\imagemanager\components\UploadException;
 use istvan0304\imagemanager\models\CkImage;
@@ -31,6 +32,7 @@ class CkImageController extends Controller
                     'preview-thumbnail' => ['GET'],
                     'get-image' => ['GET'],
                     'delete' => ['POST'],
+                    'search' => ['GET'],
                 ],
             ],
         ];
@@ -45,6 +47,12 @@ class CkImageController extends Controller
         $ckImages = CkImage::find()->all();
         $this->layout = "layout";
         CkImageManagerAsset::register($this->view);
+
+        foreach ($ckImages as $key => $ckImage) {
+            if (!$ckImage->isExistsFile()) {
+                unset($ckImages[$key]);
+            }
+        }
 
         return $this->render('index', [
             'ckImageManagerForm' => $ckImageManagerForm,
@@ -71,7 +79,7 @@ class CkImageController extends Controller
                 if ($ckImageModel != null) {
                     $response['success'] = true;
                     $response['template'] = $this->renderPartial('_details', ['ckImageArray' => $ckImageModel->toArray()]);
-                }else{
+                } else {
                     $response['success'] = false;
                     $response['message'] = Yii::t('ckimage', 'File not found!');
                 }
@@ -274,5 +282,33 @@ class CkImageController extends Controller
         }
 
         throw new \Exception(Yii::t('ckimage', 'File not found!'));
+    }
+
+    /**
+     * @param $name
+     * @return array
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     */
+    public function actionAjaxSearch($name)
+    {
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $ckImageSearch = new CkImageSearch();
+            $className = explode("\\", get_class($ckImageSearch));
+            $ckImages = $ckImageSearch->search([end($className) => ['orig_name' => $name]]);
+            $response = [];
+
+            if ($ckImages){
+                $response['success'] = true;
+                $response['result'] = $this->renderPartial('_imageList', ['ckImages' => $ckImages->getModels()]);
+            }else{
+                $response['success'] = false;
+            }
+
+            return $response;
+        } else {
+            throw new NotFoundHttpException(Yii::t('ckimage', 'Page not found!'));
+        }
     }
 }

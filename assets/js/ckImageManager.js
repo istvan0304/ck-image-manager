@@ -4,16 +4,21 @@ $(document).ready(function () {
     var $body = $('body'),
         $imgId = null,
         $search = $('#ck-search'),
+        $noImg = $('#no-image'),
         $sidebar = $('#ck-sidebar'),
         $uploadBtn = $('#ck-img-upload'),
         $form = $('#img-upload-form'),
         $fileInput = $('input[name="CkImageForm[img_files][]"]'),
-        $progessBar = $('.ck-progress'),
+        $progressBar = $('.ck-progress'),
         $details = $('.ck-details'),
         $uploadStatus = $('#ck-upload-status'),
         $detailsOpen = $('#ck-upload-details'),
         $progressClose = $('.ck-progress-close'),
-        $detailsClose = $('.ck-details-close');
+        $detailsClose = $('.ck-details-close'),
+        $loader = $('#ck-list-loader'),
+        typingTimer,
+        doneTypingInterval = 800;
+
 
     $fileInput.change(function () {
         $form.submit();
@@ -65,19 +70,35 @@ $(document).ready(function () {
     });
 
     $search.keyup(function () {
-        var search = $(this).val();
-        var items = $('.ck-image-name');
-
-        $.each(items, function (index, value) {
-            var option = $(value).attr('title').toLowerCase();
-
-            if (option !== undefined && option.indexOf(search) < 0) {
-                $(value).parent().parent().css('display', 'none');
-            } else {
-                $(value).parent().parent().css('display', 'block');
-            }
-        });
+        let search = $(this).val();
+        loader.show($loader);
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(function () {
+            doneTyping(search)
+        }, doneTypingInterval);
     });
+
+    $search.keydown(function () {
+        clearTimeout(typingTimer);
+    });
+
+    var doneTyping = (search) => {
+        if (search !== undefined) {
+
+            $.ajax('/imagemanager/ck-image/ajax-search', {
+                type: "GET",
+                dataType: "json",
+                data: {name: search},
+                async: true,
+                success: function (response) {
+                    if (response['success'] && response['result'] !== undefined) {
+                        $('#ck-pjax-image-list').empty().append(response['result']);
+                    }
+                    loader.hide($loader);
+                }
+            });
+        }
+    };
 
     var ckImage = {
         upload: () => {
@@ -86,6 +107,7 @@ $(document).ready(function () {
 
             if (formData !== undefined) {
                 $('#ck-upload-status').css('display', 'block');
+                loader.show($loader);
 
                 $.ajax('/imagemanager/ck-image/upload', {
                     xhr: function () {
@@ -95,7 +117,7 @@ $(document).ready(function () {
                             if (evt.lengthComputable) {
                                 // var percentComplete = evt.loaded / evt.total;
                                 let percentComplete = Math.round((evt.loaded * 100) / evt.total);
-                                $progessBar.css('width', percentComplete + '%');
+                                $progressBar.css('width', percentComplete + '%');
                                 $('#ck-percentage').text(percentComplete + '%');
                             }
                         }, false);
@@ -114,9 +136,12 @@ $(document).ready(function () {
                         } else {
                             $details.find('.ck-details-body').empty().append(response);
                             $.pjax.reload({container: "#ck-pjax-image-list"});
+                            images.checkCount($noImg);
                         }
 
                         $uploadStatus.css('display', 'block');
+                        $search.val('');
+                        loader.hide($loader);
                     },
                     error: function (xhr) {
                         console.log(xhr);
@@ -182,6 +207,28 @@ var sidebar = {
     },
 };
 
+var images = {
+    checkCount: ($noImage) => {
+        let imagesLength = $('.ck-img-box').length;
+
+        if ($noImage !== undefined) {
+            if (imagesLength === 0) {
+                $noImage.css('display', 'none');
+            } else {
+                $noImage.css('display', 'block');
+            }
+        }
+    }
+};
+
+var loader = {
+    show: ($loader) => {
+        $loader.css('display', 'block');
+    },
+    hide: ($loader) => {
+        $loader.css('display', 'none');
+    },
+};
 
 window.queryStringParameter = {
     get: function (uri, key) {
