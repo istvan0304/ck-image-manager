@@ -96,6 +96,8 @@ $(document).ready(function () {
                     }
                     loader.hide($loader);
                 }
+            }).done(function () {
+                ckImage.emptyDetails();
             });
         }
     };
@@ -171,6 +173,12 @@ $(document).ready(function () {
                     }
                 });
             }
+        },
+
+        emptyDetails: () => {
+            $imgId = null;
+            $sidebar.find('.ck-sidebar-content').empty();
+            $sidebar.find('.ck-no-select').css('display', 'block');
         },
 
         select: (imgId) => {
