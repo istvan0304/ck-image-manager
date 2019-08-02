@@ -1,6 +1,11 @@
 Image file upload manager for Yii2 CK editor
 =================
 
+Requirements
+------------
+- php >=7.2
+- mySQL >=5.7
+
 Installation
 ------------
 The preferred way to install this extension is through composer.
